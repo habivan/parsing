@@ -8,20 +8,9 @@
 	use DiDom\Document;
 
   $url = 'https://com.ru-trade24.ru/query/Filter';
-  $client = new \GuzzleHttp\Client(['verify' => false]);
-  $response = $client->request('POST', $url, 
-  [    
-    'form_params' => 
-      [         
-        'MainPageFilterTradeStatus' => '7'
-      ]
-  ]
-);
 
-  $html = $response->getBody()->getContents();
   $document = new Document();
-  $document->loadHtml($html);
-  $cart = $document->find('.trade-card');
+  $cart = didDomPars($url, '.trade-card');
 
   $element = [];
   foreach($cart as $n){
@@ -31,7 +20,12 @@
     $element[$num]['href'] =  'https://com.ru-trade24.ru/'.$n->first('a')->attr('href');
   }
 
-pr($element);
-
-
+  $data = [];
+  $product = didDomPars($element[416]['href'], '.info');
+  foreach($product as $prod){
+    $name = $prod->first('label[for="PartpApplicationDateTimeEnd"]');
+    // $d = $name->parent(); не могу получить родителя
+    pr($name);
+  }
+  
 

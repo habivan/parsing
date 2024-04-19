@@ -23,3 +23,22 @@ function removeSpaces($arr){
     echo '</pre>';
         die;
   }
+
+  function parsing($url){
+    $client = new \GuzzleHttp\Client(['verify' => false]);
+    $html =  $client->request('POST', $url, 
+    [    
+      'form_params' => 
+        [         
+          'MainPageFilterTradeStatus' => '7'
+        ]
+    ]
+  );
+  return $html->getBody()->getContents();
+  }
+
+  function didDomPars($url, $class){
+    $document = new DiDom\Document();
+    $document->loadHtml(parsing($url));
+    return $document->find($class);
+  }
