@@ -39,8 +39,11 @@
     return $company;
   }
   
+  function PDO(){
+    return new PDO('mysql:host=localhost;dbname=pars', 'root', '');
+  }
   function saveRow($row){
-    $db = new PDO('mysql:host=localhost;dbname=pars', 'root', '');
+    $db = PDO();
     $company = $db->prepare("INSERT INTO company (name, num, href, date) values (:name, :num, :href, :date)");
     $company->execute(['num'=>$row['num'], 'name' => $row['name'], 'href' => $row['href'], 'date' => $row['date']]);
     foreach($row['docs'] as $doc){

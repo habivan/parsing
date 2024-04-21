@@ -38,9 +38,15 @@
     }
   }
   
-  // foreach($element as $elem){
-  //   saveRow($elem);
-  // }
+  foreach($element as $elem){
+    saveRow($elem);
+  }
+
+$company = PDO()->query('SELECT * FROM company')->fetchAll();
+$files = PDO()->query('SELECT * FROM document')->fetchAll();
+require_once 'view.php';
+
+
 
 
 
